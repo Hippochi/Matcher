@@ -9,6 +9,7 @@ public class BoardManager : MonoBehaviour
     public GameObject tile;    
     public int width, height;
     public GameObject restTxt;
+    public int matches;
 
     private GameObject[,] tiles;    
 
@@ -21,6 +22,25 @@ public class BoardManager : MonoBehaviour
         Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
         CreateBoard(offset.x, offset.y);
         restTxt.SetActive(true);
+
+        switch (Random.Range(0, 3))
+        {
+            case (0):
+                matches = 2;
+                UIManager.instance.matches = 9;
+                UIManager.instance.difficultyTxt.text = "Difficulty: Easy";
+                break;
+            case (1):
+                matches = 3;
+                UIManager.instance.matches = 7;
+                UIManager.instance.difficultyTxt.text = "Difficulty: Medium";
+                break;
+            case (2):
+                matches = 4;
+                UIManager.instance.matches = 5;
+                UIManager.instance.difficultyTxt.text = "Difficulty: Hard";
+                break;
+        }
     }
 
     private void CreateBoard(float xOffset, float yOffset)
@@ -49,6 +69,7 @@ public class BoardManager : MonoBehaviour
 
                 Sprite newSprite = okColour[Random.Range(0, okColour.Count)];
                 newTile.GetComponent<SpriteRenderer>().sprite = newSprite;
+                newTile.GetComponent<Tile>().matches = matches;
 
                 prevLeft[y] = newSprite;
                 prevDown = newSprite;

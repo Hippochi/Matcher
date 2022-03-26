@@ -1,23 +1,22 @@
 using UnityEngine;
 
-public enum Clip { Select, Swap, Clear };
 
-public class SFXManager : MonoBehaviour
+public class SoundManager : MonoBehaviour
 {
-	public static SFXManager instance;
+	public static SoundManager instance;
 
-	private AudioSource[] sfx;
+	private AudioSource sfx;
 
 	// Use this for initialization
 	void Start()
 	{
-		instance = GetComponent<SFXManager>();
-		sfx = GetComponents<AudioSource>();
+		instance = GetComponent<SoundManager>();
+		sfx = GetComponent<AudioSource>();
 	}
 
-	public void Play(Clip audioClip)
+	public void Play()
 	{
-		sfx[(int)audioClip].Play();
+		sfx.Play();
 	}
 }
 

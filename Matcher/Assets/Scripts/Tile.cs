@@ -6,7 +6,7 @@ public class Tile : MonoBehaviour
 {
 	private static Color selectedColor = new Color(.5f, .5f, .5f, 1.0f);
 	public static Tile prevSelected = null;
-	public int matches = 2;
+	public int matches;
 
 	private SpriteRenderer renderer;
 	private bool isSelected = false;
@@ -25,7 +25,7 @@ public class Tile : MonoBehaviour
 		isSelected = true;
 		renderer.color = selectedColor;
 		prevSelected = gameObject.GetComponent<Tile>();
-		//SoundManager.instance.Play(Clip.Select);
+		
 	}
 
 	private void Deselect()
@@ -37,7 +37,7 @@ public class Tile : MonoBehaviour
 
 	void OnMouseDown()
     {
-		if (renderer.sprite == null || BoardManager.instance.isRefreshing)
+		if (renderer.sprite == null || UIManager.instance.isGameOver)
 		{
 			return;
 		}
@@ -80,11 +80,11 @@ public class Tile : MonoBehaviour
 		{ 
 			return;
 		}
-
+		UIManager.instance.moves -= 1;
 		Sprite tSprite = renderer2.sprite; 
 		renderer2.sprite = renderer.sprite;
 		renderer.sprite = tSprite;
-		//SoundManager.instance.Play(Clip.Swap);
+		
 	}
 
 	private GameObject GetAdjacent(Vector2 castDir)
@@ -93,7 +93,7 @@ public class Tile : MonoBehaviour
 		if (hit.collider != null)
 		{
 			return hit.collider.gameObject;
-			Debug.Log(hit.collider.gameObject);
+			
 		}
 		return null;
 	}
@@ -151,7 +151,8 @@ public class Tile : MonoBehaviour
 			StopCoroutine(BoardManager.instance.FindNullTiles());
 			StartCoroutine(BoardManager.instance.FindNullTiles());
 
-			//SoundManager.instance.Play(Clip.Clear);
+			SoundManager.instance.Play();
+			UIManager.instance.matches -= 1;
 		}
 	}
 

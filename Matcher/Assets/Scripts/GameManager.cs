@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject board;
     [SerializeField] private GameObject introTxt;
     [SerializeField] private GameObject resetTxt;
+    [SerializeField] private GameObject UiManager;
+
 
     private bool hasOpened = false;
     void Update()
@@ -18,6 +20,7 @@ public class GameManager : MonoBehaviour
             board.SetActive(true);
             introTxt.SetActive(false);
             hasOpened = true;
+            UiManager.SetActive(true);
         }
 
         if (Input.GetKeyDown("x") && hasOpened == true)
